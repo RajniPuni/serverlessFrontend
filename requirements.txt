@@ -1,0 +1,6 @@
+boto3
+Flask==1.1.1
+Flask-Cors==3.0.8
+googleapiclient.discovery
+google.oauth2
+json
