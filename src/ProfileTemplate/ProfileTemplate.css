@@ -1,0 +1,19 @@
+.login-settings {
+    max-width: 500px;
+    margin: auto;
+}
+
+.paper-plane {
+    position: absolute;
+    offset-path: path('M20,20 C20,100 1000,0 800,500');
+    animation: move 6000ms infinite alternate ease-in-out;
+}
+
+@keyframes move {
+    0% {
+        offset-distance: 0%;
+    }
+    100% {
+        offset-distance: 100%;
+    }
+}
