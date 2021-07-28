@@ -1,7 +1,3 @@
-/*
-* Authors: 
-    - Sriram, Ponangi
-*/
 import './Register.css';
 import axios from 'axios';
 import React, { Component } from 'react';
@@ -12,11 +8,14 @@ class Register extends Component {
         successMessage: ""
     }
     userRegistrationInfo = {
-        firstName: "",
-        lastName: "",
+        userName: "",
         email: "",
         password: "",
-        confirmPassword: "",
+        isRestOwner: "",
+        owner: false,
+        secquestion: "",
+        secAnswer: "",
+        uid:""
     }
 
     registerHandler = (event) => {
@@ -25,33 +24,59 @@ class Register extends Component {
             errorMessage: "",
             successMessage: ""                    
         });
+        if (this.userRegistrationInfo.isRestOwner == "on"){
+            this.userRegistrationInfo.owner = true;
+        }
 
         console.log(this.userRegistrationInfo);
+        axios.post('https://node-app-o3vfgoc4iq-uc.a.run.app/createUser', {email: this.userRegistrationInfo.email, 
+                password: this.userRegistrationInfo.password})
+            .then(res => {
+                console.log("createuser " + res.data.uid)
+                this.userRegistrationInfo.uid = res.data.uid;
+                if(this.userRegistrationInfo.uid != ""){
+                    axios.post('https://node-app-o3vfgoc4iq-uc.a.run.app/postUserDetails', {id: this.userRegistrationInfo.uid, 
+                            email: this.userRegistrationInfo.email, password: this.userRegistrationInfo.password, 
+                            name: this.userRegistrationInfo.userName, isRestaurantOwner: this.userRegistrationInfo.owner})
+                            .then(res => {
+                                console.log("postuserdetails  " + res)
 
-        if (this.userRegistrationInfo.password !== this.userRegistrationInfo.confirmPassword) {
-            this.setState({ errorMessage: "Password and Confirm Password do not match." });
-        } else {        
-            let userRegistrationInfoRequestBody = Object.assign({}, this.userRegistrationInfo);
-            delete userRegistrationInfoRequestBody.confirmPassword;
-            console.log(userRegistrationInfoRequestBody);
-            axios.post('auth/register', userRegistrationInfoRequestBody)
-                .then(res => {
-                    this.setState({ successMessage: "Account Created Successfully." });
-                }).catch(error => {
-                    console.log(JSON.stringify(error.response));
-                    if (error.response.data.errors.messages){
-                        this.setState({ errorMessage: "Error Message: " + error.response.data.errors.messages,
-                        successMessage:""});
-                    }else if(error.response.data.errors.keyValue) {
-                        this.setState({ errorMessage: "Account Exists For "+ error.response.data.errors.keyValue.email,
-                        successMessage:""});
-                    }else{
-                        this.setState({ errorMessage: "Sorry. There was some error,"+
-                        " could not register your account. Please try again later.",
-                        successMessage:""});
-                    }
-                })
-        }
+                                axios.post('https://node-app-o3vfgoc4iq-uc.a.run.app/postSecurityQues', {
+                                    userId: this.userRegistrationInfo.uid, 
+                                    questionId: "1",
+                                    question: this.userRegistrationInfo.secquestion, 
+                                    answer: this.userRegistrationInfo.secAnswer,isRegister: true})
+                                    .then(res => {
+                                        console.log("postsecurityques " + res.data);
+                                        this.setState({
+                                            successMessage: "Registration successful"                    
+                                        });
+                                        // window.location.href = "http://localhost:3001/login";
+                                    },
+                                    error => {                        
+                                        console.log(error);
+                                        this.setState({
+                                            errorMessage: "Sorry, something went wrong on our side. Please try again later."                    
+                                        });
+                                    }
+                                );
+                        },
+                        error => {                        
+                            console.log(error);
+                            this.setState({
+                                errorMessage: "Sorry, something went wrong on our side. Please try again later."                    
+                            });
+                        }
+                    );
+                }
+                this.setState({ successMessage: "Account Created Successfully." });
+
+            }).catch(error => {
+                console.log(JSON.stringify(error.response));
+                this.setState({ errorMessage: "Sorry. There was some error,"+
+                " could not register your account. Please try again later.",
+                successMessage:""});
+            })
 
     }
     showMessage = () => {
@@ -87,14 +112,9 @@ class Register extends Component {
                         this.showMessage()
                     }
                     <div className="form-group col-12">
-                        <input type="text" className="form-control" id="registerInputFirstName"
-                            placeholder="First Name" required={true}
-                            onChange={event => this.userRegistrationInfo.firstName = event.target.value} />
-                    </div>
-                    <div className="form-group col-12">
-                        <input type="text" className="form-control" id="registerInputLastName"
-                            placeholder="Last Name" required={true}
-                            onChange={event => this.userRegistrationInfo.lastName = event.target.value} />
+                        <input type="text" className="form-control" placeholder="Username"
+                        onChange={event => this.userRegistrationInfo.userName = event.target.value} ></input>
+                    
                     </div>
                     <div className="form-group col-12">
                         <input type="email" className="form-control" id="loginInputEmail"
@@ -107,11 +127,31 @@ class Register extends Component {
                             id="loginInputPassword" placeholder="Password" required={true}
                             onChange={event => this.userRegistrationInfo.password = event.target.value} />
                     </div>
+                    <div className="form-group col-12">                        
+                            <span><b>Select a security question</b></span>
+                            <select name="secques" id="secques" className="form-control" 
+                            onChange={event => this.userRegistrationInfo.secquestion = event.target.value}>
+                                <option value="0">--Select--</option>
+                                <option value="What is your birth city?">What is your birth city?</option>
+                                <option value="What is your favourite pet?">What is your favourite pet?</option>
+                                <option value="What is your cousin name?">What is your cousin name?</option>
+                                <option value="Which is your favourite car?">Which is your favourite car?</option>
+                            </select>
+                    </div>
+                    
+                    <div className="form-group col-12">
+                        <span><b>Answer</b></span>
+                        <input type="text" className="form-control"
+                            id="loginInputAnswer" 
+                            onChange={event => this.userRegistrationInfo.secAnswer = event.target.value} />
+                            
+                    </div>
 
                     <div className="form-group col-12">
-                        <input type="password" className="form-control"
-                            id="loginInputConfirmPassword" placeholder="Confirm Password" required={true}
-                            onChange={event => this.userRegistrationInfo.confirmPassword = event.target.value} />
+                        <input type="checkbox" className="form-control"
+                            id="loginInputrestOwner"  style={{width:"fit-content"}}
+                            onChange={event => this.userRegistrationInfo.isRestOwner = event.target.value} />
+                            <span style={{width:"fit-content"}}>Restaurant owner?</span>
                     </div>
 
                     <div className="form-check col-12">

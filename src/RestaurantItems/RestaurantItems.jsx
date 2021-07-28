@@ -33,11 +33,17 @@ class RestaurantItems extends Component {
         var id = uuid()
         
         await axios
-          .post("http://localhost:3000/postorder", {orderitems:this.state.orderitems, id: id})
+          .post("https://node-app-o3vfgoc4iq-uc.a.run.app/postorder", {orderitems:this.state.orderitems, id: id})
           .then((res) => {            
             alert("Order placed successfully.");
           })
           .catch((err) => {this.setState({ error: true,errorMessage:"There is some issue in placing order!",});});
+
+        await axios
+        .get("http://127.0.0.1:5000/createVisualization",)
+        .catch((err) => {this.setState({ error: true,errorMessage:"There is some issue in updating visualization!",});});
+
+        this.setState({orderitems: ""})
     };  
     
     displayItems = async() => {  
@@ -69,7 +75,7 @@ class RestaurantItems extends Component {
                         <div className="col-md-10 mb-5 pl-5 pr-6">
                             <div className="accordion" id="servicesAcc">
                             {this.state.items.map((item)=>(
-                                <div className="card" id={item.id}>
+                                <div className="card">
                                     <div className="card-header" id="head1">
                                         <button className="btn btn-link btn-acc" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                             <i className="fas fa-map-marked mr-3"></i> {item.name}</button>
@@ -80,7 +86,7 @@ class RestaurantItems extends Component {
                                      
                                             <div class="items">
                                                <div>
-                                                    <button type="button" onClick={()=>this.handleAddToCart(item.id)} class="mt-2 items btn btn-warning btn-lg btn-block">Add to cart</button>
+                                                    <button type="button" onClick={()=>this.handleAddToCart(item.name)} class="mt-2 items btn btn-warning btn-lg btn-block">Add to cart</button>
                                                         
                                                 </div>                                          
                                             </div>

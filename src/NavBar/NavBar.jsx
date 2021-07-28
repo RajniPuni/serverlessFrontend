@@ -1,35 +1,30 @@
-/*
-* Authors: 
-    - Sriram, Ponangi
-    - Jay, Gajjar
-*/
-
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import './NavBar.css';
 
 class NavBar extends Component {
 
-  state = {
-    groups:[
-      {
-        _id: "",
-        name: ""
-      }
-    ]
+  constructor(props) {
+      super(props);
+      this.state = {
+        currentUser: localStorage.getItem('loggedInuser')
+    }
+
+    this.handlechatclick = this.handlechatclick.bind(this);  
+  }
+  handlechatclick(event) { 
+      
+      window.location.href = "https://serverlesschatbot.s3.amazonaws.com/Chat.html";
   }
   componentDidMount = () =>{
-    // axios.get('user/groups').then(result => {
-    //   this.setState({
-    //     groups:result.data.groups
-    //   })
-    // });
+    
   }
 
   componentWillReceiveProps = (props) => {
     console.log(props);
   }
+
 
   navLinks = () => {
     
@@ -40,7 +35,7 @@ class NavBar extends Component {
             <NavLink className="nav-link active" to={"/Home"}>Home</NavLink>
           </li>
           <li className="nav-item">
-          <NavLink className="nav-link active" to={"/Chat"}>Chat</NavLink>
+          <NavLink className="nav-link active" onClick={()=>this.handlechatclick()} to={"/Chat"}>Chat</NavLink>
           </li>
           <li className="nav-item">
           <NavLink className="nav-link active" to={"/onlinesupport"}>Online Support</NavLink>
@@ -58,24 +53,25 @@ class NavBar extends Component {
 
   logoutHandler = () => {
     localStorage.clear();
-    this.props.setCurrentUser(null);
+    this.setState({currentUser:""});
+    localStorage.setItem('loggedInuser', "");
+    window.location.href = "https://node-app-o3vfgoc4iq-uc.a.run.app/Home";
   }
 
   welcomeMessage = () => {
-    if (this.props.currentUser && this.props.currentUser.firstName) {
+    if (this.state.currentUser) {
       return (
         <li className="nav-item ">
           <NavLink className="text-light" to="/profile/edit"
-            style={{ fontFamily: 'Verdana' }}>Welcome, {this.props.currentUser.firstName}</NavLink>
+            style={{ fontFamily: 'Verdana' }}>Welcome, {this.state.currentUser}</NavLink>
         </li>
-      );
-
+      );  
     }
   }
 
   dropdownNavLinks = () => {
 
-    if (this.props.currentUser) {
+    if (this.state.currentUser) {
 
       return (
         <div className="dropdown-menu dropdown-menu-right">
@@ -99,7 +95,7 @@ class NavBar extends Component {
       <div>
 
         <nav className="navbar sticky-top navbar-expand-lg navbar-dark" style={{ background: 'grey' }}>
-          <NavLink className="navbar-brand" to="/"><span><b>DALLMSServerless</b></span></NavLink>
+          <NavLink className="navbar-brand" to="/"><span><b>Halifax Foodie</b></span></NavLink>
 
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

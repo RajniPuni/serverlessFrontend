@@ -27,12 +27,14 @@ class UpdateOrder extends Component {
     }
       
     updateOrder = async() => {
+        console.log(this.state.orderid)
+        console.log(this.state.status)
         await axios
-          .put("http://localhost:3000/updateorder", {id:this.state.orderid, status: this.state.status})
+          .put("https://node-app-o3vfgoc4iq-uc.a.run.app/updateorder", {id:this.state.orderid, status: this.state.status})
           .then((res) => {            
-            alert("Review posted successfully.");
+            alert("Order status updated successfully.");
           })
-          .catch((err) => {this.setState({ error: true,errorMessage:"There is some issue in placing order!",});});
+          .catch((err) => {console.log(err)});
     };
 
     render() {        

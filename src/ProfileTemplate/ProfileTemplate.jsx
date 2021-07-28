@@ -1,8 +1,3 @@
-/*
-* Authors: 
-    - Sriram, Ponangi
-    - Jay, Gajjar (UI)
-*/
 import React from 'react';
 import Login from '../Login/Login';
 import Register from '../Register/Register';

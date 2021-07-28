@@ -1,10 +1,3 @@
-/*
-* Authors: 
-    - Sriram, Ponangi
-    - Jay Gajjar
-    - Rajni Puni
-    - Abhinav Mandava
-*/
 import './App.css';
 
 
@@ -19,6 +12,7 @@ import DataProcessing from './DataProcessing/DataProcessing';
 import RestaurantItems from './RestaurantItems/RestaurantItems';
 import OrderSearch from './OrderSearch/OrderSearch';
 import UpdateOrder from './UpdateOrder/UpdateOrder';
+import MachineLearning from './MachineLearning/MachineLearning';
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
@@ -58,6 +52,7 @@ class App extends Component {
             <Route path="/OnlineSupport" exact component={OnlineSupport} />
             <Route path="/DataProcessing" exact component={DataProcessing} />
             <Route path="/OrderSearch" exact component={OrderSearch} />
+            <Route path="/MachineLearning" exact component={MachineLearning} />
             <Route path="/RestaurantItems/:id" exact component={RestaurantItems} />
             <Route path="/UpdateOrder" exact component={UpdateOrder} />
             <Route path="/profile/login" exact component={() => <ProfileTemplate setCurrentUser={this.setCurrentUser}/>} />

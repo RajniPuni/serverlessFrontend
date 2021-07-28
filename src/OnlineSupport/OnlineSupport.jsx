@@ -1,9 +1,3 @@
-/*
-* Authors: 
-    - Sriram, Ponangi
-    - Jay, Gajjar (UI)
-*/
-// import logo from '../logo.png';
 import './OnlineSupport.css';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';

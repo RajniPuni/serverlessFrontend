@@ -33,7 +33,7 @@ class OrderSearch extends Component {
       
     postreview = async() => {
         await axios
-          .post("http://localhost:3000/postratings", {ratings:this.state.orderreview})
+          .post("https://node-app-o3vfgoc4iq-uc.a.run.app/postratings", {ratings:this.state.orderreview})
           .then((res) => {            
             alert("Review posted successfully.");
           })

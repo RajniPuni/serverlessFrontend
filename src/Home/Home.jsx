@@ -41,18 +41,10 @@ class Home extends Component {
                 <div className="container bg-white pb-80">
                     
                     {/* Header Row */}
-                    <div className="row hero mb-80" style={{ backgroundImage: "url(img/home-polaroid.jpg)" }}>
-                        <div className="col-md-3"></div>
-                        <div className="col-md-6 p-5 hero-content">
-                            <h1 className="display-3"><span className="text-primary">Take A Break!</span></h1>
-                            <h5 className="font-weight-light"><span className="text-success">Enjoy food delivery and various other services using this application.</span></h5>
-                        </div>
-                        <div className="col-md-3"></div>
-                    </div>
-
+                    <div className="mt-5"></div>
                     {/* What We Do Row */}
-                    <h2 className="display-4 text-center mb-80">What We <span className="text-pink">Provide</span></h2>
-                    <div className="row mb-80">
+                    <h2 className="display-4 text-center pt-70">What We <span className="text-pink">Provide</span></h2>
+                    <div className="row mb-4">
                         <div className="col-md-6 mb-3">
                             <img className="img-fluid rounded" src={"/img/travel-agency.jpg"} alt=""/>
                         </div>
@@ -88,8 +80,14 @@ class Home extends Component {
                             </div>
                         </div>
                     </div>
+                    <h2 className="display-4 text-center mb-2">Most ordered <span className="text-pink">items</span></h2>
+                    <div className="row">
+                        <div className="pl-80">
+                        <iframe width="600" height="450" src="https://datastudio.google.com/embed/reporting/c7c10cb2-29bf-41f2-90b7-931240727e02/page/FgcWC" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        
+                    </div>
 
-                   
                     
                 </div>
             </div>
