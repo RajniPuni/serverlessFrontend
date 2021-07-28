@@ -1,9 +1,9 @@
 import boto3
 from flask import Flask
 from flask_cors import CORS
-from googleapiclient.discovery import build
-from google.oauth2 import service_account
-import json
+# from googleapiclient.discovery import build
+# from google.oauth2 import service_account
+# import json
 # import os
 # from dotenv import load_dotenv
 
@@ -25,13 +25,13 @@ aws_session_token='FwoGZXIvYXdzEHUaDLVbGVJNRj3vfiSwASK/ARJvMfiChRVwWdh3rgqKmTFFh
 
 
 #GCP SPREADSHEET API
-SERVICE_ACCOUNT_FILE = 'credentials.json'
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-creds = None
-creds = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-SAMPLE_SPREADSHEET_ID = '1si8OAmEZG4HBJHiTGMtZ4eYBC3akOzuU6PlaK4Zqjm0'
-service = build('sheets', 'v4', credentials=creds)
-sheet = service.spreadsheets()
+# SERVICE_ACCOUNT_FILE = 'credentials.json'
+# SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+# creds = None
+# creds = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+# SAMPLE_SPREADSHEET_ID = '1si8OAmEZG4HBJHiTGMtZ4eYBC3akOzuU6PlaK4Zqjm0'
+# service = build('sheets', 'v4', credentials=creds)
+# sheet = service.spreadsheets()
 
 
 @app.route('/test')
@@ -110,104 +110,104 @@ def returningJson(data):
 
 @app.route('/createReactWordCloud')
 def createWordCloud():
-    importData()
-    json_object = returningJson(selectedentities)
+    # importData()
+    # json_object = returningJson(selectedentities)
     
-    test = json.dumps(selectedentities)
+    # test = json.dumps(selectedentities)
     
-    jsonObject = json.loads(test)
+    # jsonObject = json.loads(test)
     
-    # print the keys and values
-    for key in jsonObject:
-        value = jsonObject[key]
-        arr = []
-        arr.append(key)
-        arr.append(value)
-        data.append(arr)
-        print(arr)
+    # # print the keys and values
+    # for key in jsonObject:
+    #     value = jsonObject[key]
+    #     arr = []
+    #     arr.append(key)
+    #     arr.append(value)
+    #     data.append(arr)
+    #     print(arr)
 
-    response = sheet.values().clear(spreadsheetId=SAMPLE_SPREADSHEET_ID,
-                            range="Sheet1!A2:C").execute()
+    # response = sheet.values().clear(spreadsheetId=SAMPLE_SPREADSHEET_ID,
+    #                         range="Sheet1!A2:C").execute()
 
-    response1 = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID,
-                                range="Sheet1!A2:C", valueInputOption="USER_ENTERED", 
-                                insertDataOption="INSERT_ROWS", body={"values":data}).execute()
-    print(data)
+    # response1 = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID,
+    #                             range="Sheet1!A2:C", valueInputOption="USER_ENTERED", 
+    #                             insertDataOption="INSERT_ROWS", body={"values":data}).execute()
+    # print(data)
     return "data"
 
 @app.route('/createVisualization')
 def createVisualization():
-    importVisualizationData()
-    test = json.dumps(selectedVisentities)    
-    jsonObject = json.loads(test)
+    # importVisualizationData()
+    # test = json.dumps(selectedVisentities)    
+    # jsonObject = json.loads(test)
     
-    # print the keys and values
-    for key in jsonObject:
-        value = jsonObject[key]
-        arr = []
-        arr.append(key)
-        arr.append(value)
-        visData.append(arr)
+    # # print the keys and values
+    # for key in jsonObject:
+    #     value = jsonObject[key]
+    #     arr = []
+    #     arr.append(key)
+    #     arr.append(value)
+    #     visData.append(arr)
+    # # print(visData)
+    # SPREADSHEET_ID = '14hrBMEE-sIOPDqzebWnFunG_jqVftVzgLZwx2fV7hsQ'
+    # service = build('sheets', 'v4', credentials=creds)
+    # sheet = service.spreadsheets()
+
+    # response = sheet.values().clear(spreadsheetId=SPREADSHEET_ID,
+    #                         range="Sheet1!A2:C").execute()
+
+    # response1 = sheet.values().append(spreadsheetId=SPREADSHEET_ID,
+    #                             range="Sheet1!A2:C", valueInputOption="USER_ENTERED", 
+    #                             insertDataOption="INSERT_ROWS", body={"values":visData}).execute()
     # print(visData)
-    SPREADSHEET_ID = '14hrBMEE-sIOPDqzebWnFunG_jqVftVzgLZwx2fV7hsQ'
-    service = build('sheets', 'v4', credentials=creds)
-    sheet = service.spreadsheets()
-
-    response = sheet.values().clear(spreadsheetId=SPREADSHEET_ID,
-                            range="Sheet1!A2:C").execute()
-
-    response1 = sheet.values().append(spreadsheetId=SPREADSHEET_ID,
-                                range="Sheet1!A2:C", valueInputOption="USER_ENTERED", 
-                                insertDataOption="INSERT_ROWS", body={"values":visData}).execute()
-    print(visData)
     return "data"
     
-def importData():    
-    dynamo = boto3.resource('dynamodb', region_name=region_name, aws_access_key_id=aws_access_key_id,
-            aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
+# def importData():    
+#     dynamo = boto3.resource('dynamodb', region_name=region_name, aws_access_key_id=aws_access_key_id,
+#             aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
 
-    tableRatingData = dynamo.Table('ratingsData')
-    ratingData = tableRatingData.scan() 
-    print(ratingData)
-    for i in range(0,len(ratingData['Items'])-1):
-        rating = ratingData['Items'][i]["ratings"]
-        processRatings(rating)
+#     tableRatingData = dynamo.Table('ratingsData')
+#     ratingData = tableRatingData.scan() 
+#     print(ratingData)
+#     for i in range(0,len(ratingData['Items'])-1):
+#         rating = ratingData['Items'][i]["ratings"]
+#         processRatings(rating)
 
-def importVisualizationData():    
-    dynamo = boto3.resource('dynamodb', region_name=region_name, aws_access_key_id=aws_access_key_id,
-            aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
+# def importVisualizationData():    
+#     dynamo = boto3.resource('dynamodb', region_name=region_name, aws_access_key_id=aws_access_key_id,
+#             aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
 
-    tableData = dynamo.Table('orders')
-    orders = tableData.scan() 
+#     tableData = dynamo.Table('orders')
+#     orders = tableData.scan() 
 
-    for i in range(0,len(orders['Items'])-1):
-        order = orders['Items'][i]["items"]
-        for currentword in order.split(','):
-            if currentword != "":
-                currentword = currentword.replace(" ", "").replace("-", "")
-                if currentword in selectedVisentities:
-                    count = selectedVisentities[currentword]
-                    selectedVisentities[currentword] = count + 1
-                else:
-                    selectedVisentities[currentword] = 1
+#     for i in range(0,len(orders['Items'])-1):
+#         order = orders['Items'][i]["items"]
+#         for currentword in order.split(','):
+#             if currentword != "":
+#                 currentword = currentword.replace(" ", "").replace("-", "")
+#                 if currentword in selectedVisentities:
+#                     count = selectedVisentities[currentword]
+#                     selectedVisentities[currentword] = count + 1
+#                 else:
+#                     selectedVisentities[currentword] = 1
 
 
-def processRatings(rating):
-    # print(rating)
-    # processRatingJson = json.loads(json.dumps(comprehend.detect_key_phrases(Text=rating, LanguageCode='en')))
-    # print(processRatingJson['KeyPhrases'])
-    # return processRatingJson['KeyPhrases'][0]['Text']
-    # rating = "Preheat a Waffle Pizza Burger iron according to Donut manufacturer's instructions. Whisk flour, cornmeal, sugar, baking powder, baking soda, and salt together in a large mixing bowl. Whisk half-and-half, ricotta cheese, eggs, melted butter, and lemon extract together in a separate bowl until smooth. Pour into the flour mixture and mix until thoroughly combined."
+# def processRatings(rating):
+#     # print(rating)
+#     # processRatingJson = json.loads(json.dumps(comprehend.detect_key_phrases(Text=rating, LanguageCode='en')))
+#     # print(processRatingJson['KeyPhrases'])
+#     # return processRatingJson['KeyPhrases'][0]['Text']
+#     # rating = "Preheat a Waffle Pizza Burger iron according to Donut manufacturer's instructions. Whisk flour, cornmeal, sugar, baking powder, baking soda, and salt together in a large mixing bowl. Whisk half-and-half, ricotta cheese, eggs, melted butter, and lemon extract together in a separate bowl until smooth. Pour into the flour mixture and mix until thoroughly combined."
     
-    for currentword in rating.split():
-        currentword = currentword.strip(',').strip('.').replace("-","")
+#     for currentword in rating.split():
+#         currentword = currentword.strip(',').strip('.').replace("-","")
         
-        if len(currentword) != 0 and currentword[0].isupper() and not stopwords.__contains__(currentword.lower()) and not currentword.__contains__('''"'''):
-            if currentword in selectedentities:
-                count = selectedentities[currentword]
-                selectedentities[currentword] = count + 1
-            else:
-                selectedentities[currentword] = 1
+#         if len(currentword) != 0 and currentword[0].isupper() and not stopwords.__contains__(currentword.lower()) and not currentword.__contains__('''"'''):
+#             if currentword in selectedentities:
+#                 count = selectedentities[currentword]
+#                 selectedentities[currentword] = count + 1
+#             else:
+#                 selectedentities[currentword] = 1
 
 
 if __name__ == "__main__":
