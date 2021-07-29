@@ -35,13 +35,13 @@ class OrderSearch extends Component {
         await axios
           .post("https://node-app-o3vfgoc4iq-uc.a.run.app/postratings", {ratings:this.state.orderreview})
           .then((res) => {            
-             axios
-                .get("https://python-o3vfgoc4iq-uc.a.run.app/createReactWordCloud")
-                .then((res) => {            
+            //  axios
+            //     .get("https://python-o3vfgoc4iq-uc.a.run.app/createReactWordCloud")
+            //     .then((res) => {            
                     
                     alert("Review posted successfully.");
-                })
-                .catch((err) => {this.setState({ error: true,errorMessage:"There is some issue in placing order!",});});            
+            //     })
+                // .catch((err) => {this.setState({ error: true,errorMessage:"There is some issue in placing order!",});});            
           })
           .catch((err) => {this.setState({ error: true,errorMessage:"There is some issue in placing order!",});});
     };

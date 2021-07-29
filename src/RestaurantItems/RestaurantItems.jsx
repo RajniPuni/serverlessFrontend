@@ -34,11 +34,11 @@ class RestaurantItems extends Component {
         await axios
           .post("https://node-app-o3vfgoc4iq-uc.a.run.app/postorder", {orderitems:this.state.orderitems, id: id})
           .then((res) => {            
-            axios.get("https://python-o3vfgoc4iq-uc.a.run.app/createVisualization")
-                .then((res) => {            
+            // axios.get("https://python-o3vfgoc4iq-uc.a.run.app/createVisualization")
+            //     .then((res) => {            
                     alert("Order placed successfully. Order id: " + id);
-                })
-                .catch((err) => {this.setState({ error: true,errorMessage:"There is some issue in placing order!",});});
+            //     })
+            //     .catch((err) => {this.setState({ error: true,errorMessage:"There is some issue in placing order!",});});
             })
           .catch((err) => {this.setState({ error: true,errorMessage:"There is some issue in placing order!",});});
 
