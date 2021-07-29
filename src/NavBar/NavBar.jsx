@@ -15,10 +15,10 @@ class NavBar extends Component {
   }
   handlechatclick(event) { 
       
-      window.location.href = "https://serverlesschatbot.s3.amazonaws.com/Chat.html";
+      window.location.href = "https://front-ion5wdstsq-uc.a.run.app/user";
   }
   componentDidMount = () =>{
-    
+    console.log("logged in user" + localStorage.getItem('loggedInuser'));
   }
 
   componentWillReceiveProps = (props) => {
@@ -28,7 +28,7 @@ class NavBar extends Component {
 
   navLinks = () => {
     
-    
+    if (localStorage.getItem('loggedInuser') !="" || localStorage.getItem('loggedInuser') != null){
       return (
         <ul className="navbar-nav mr-auto main-nav">
           <li className="nav-item">
@@ -48,7 +48,7 @@ class NavBar extends Component {
           </li>
         </ul>
       )
-    
+    }else{return (<div></div>)}
   }
 
   logoutHandler = () => {
@@ -71,7 +71,7 @@ class NavBar extends Component {
 
   dropdownNavLinks = () => {
 
-    if (this.state.currentUser) {
+    if (localStorage.getItem('loggedInuser') !="" && localStorage.getItem('loggedInuser') != null) {
 
       return (
         <div className="dropdown-menu dropdown-menu-right">

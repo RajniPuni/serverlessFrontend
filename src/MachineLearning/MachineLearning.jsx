@@ -33,34 +33,36 @@ class MachineLearning extends Component {
     }
 
     recipeHandler = (event) => {
-        alert("submit");
+        // alert("submit");
         event.preventDefault();
-        console.log(this.recipeInfo);        
+             
         
-        axios.post('https://node-app-o3vfgoc4iq-uc.a.run.app/addrecipe/', this.recipeInfo)
-            .then(res => {
-                alert("Recipe saved successfully.")
-                Console.log(res)                
-            })
-            .catch(error => {
-                console.log(error.body);
-            })           
+               
     }
 
-    getTagsHandler = (event) => {
+    getTagsHandler = async (event) => {
         alert("tag");
-        this.recipeInfo.tag = "test tag"
+        // this.recipeInfo.tag = "test tag"
         
         // console.log(this.recipeInfo);        
         
-        // axios.post('https://localhost:3000/addrecipe/' + this.recipeInfo)
-        //     .then(res => {
-        //         this.recipeInfo.tag = res.tag
-        //         Console.log(res)                
-        //     })
-        //     .catch(error => {
-        //         console.log(error.body);
-        //     })           
+        await axios.get('https://us-central1-serverless-316507.cloudfunctions.net/mlfunction?name=' + this.recipeInfo.description)
+            .then(res => {
+                console.log("msg" + res.data.msg.label)
+                this.recipeInfo.tag = res.data.msg.label
+                console.log(this.recipeInfo);   
+                axios.post('https://node-app-o3vfgoc4iq-uc.a.run.app/addrecipe/', this.recipeInfo)
+                    .then(res => {
+                        alert("Recipe saved successfully and is tagged as " + this.recipeInfo.tag)
+                        Console.log(res)                
+                    })
+                    .catch(error => {
+                        console.log(error.body);
+                    })                   
+            })
+            .catch(error => {
+                console.log(error);
+            })           
     }
 
     render() {

@@ -37,7 +37,8 @@ class UpdateOrder extends Component {
           .catch((err) => {console.log(err)});
     };
 
-    render() {        
+    render() {     
+        if(localStorage.getItem('isRestOwner')){
         return (
         <div className="container bg-white pb-80">
             <h2 className="display-5 text-center mb-2 mt-5"><span className="text-pink">Orders</span></h2>
@@ -60,6 +61,10 @@ class UpdateOrder extends Component {
             </div>                                
         </div>
         );
+        }
+        else{
+            return(<div></div>)
+        }
     }
 }
 

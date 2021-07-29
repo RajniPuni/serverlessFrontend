@@ -35,7 +35,13 @@ class OrderSearch extends Component {
         await axios
           .post("https://node-app-o3vfgoc4iq-uc.a.run.app/postratings", {ratings:this.state.orderreview})
           .then((res) => {            
-            alert("Review posted successfully.");
+             axios
+                .get("http://127.0.0.1:5000/createReactWordCloud")
+                .then((res) => {            
+                    
+                    alert("Review posted successfully.");
+                })
+                .catch((err) => {this.setState({ error: true,errorMessage:"There is some issue in placing order!",});});            
           })
           .catch((err) => {this.setState({ error: true,errorMessage:"There is some issue in placing order!",});});
     };

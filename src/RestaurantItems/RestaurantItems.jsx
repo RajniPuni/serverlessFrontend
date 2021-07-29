@@ -30,18 +30,17 @@ class RestaurantItems extends Component {
     }
     
     postorder = async() => {
-        var id = uuid()
-        
+        var id = uuid()        
         await axios
           .post("https://node-app-o3vfgoc4iq-uc.a.run.app/postorder", {orderitems:this.state.orderitems, id: id})
           .then((res) => {            
-            alert("Order placed successfully.");
-          })
+            axios.get("http://127.0.0.1:5000/createVisualization")
+                .then((res) => {            
+                    alert("Order placed successfully. Order id: " + id);
+                })
+                .catch((err) => {this.setState({ error: true,errorMessage:"There is some issue in placing order!",});});
+            })
           .catch((err) => {this.setState({ error: true,errorMessage:"There is some issue in placing order!",});});
-
-        await axios
-        .get("http://127.0.0.1:5000/createVisualization",)
-        .catch((err) => {this.setState({ error: true,errorMessage:"There is some issue in updating visualization!",});});
 
         this.setState({orderitems: ""})
     };  

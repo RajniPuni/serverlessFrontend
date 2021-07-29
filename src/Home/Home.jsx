@@ -35,7 +35,7 @@ class Home extends Component {
     render() {
         console.log(this.props.currentUser);
         console.log(localStorage.getItem('firstName'));
-        
+        if (localStorage.getItem('loggedInuser') !="" && localStorage.getItem('loggedInuser') != null){
         return (
             <div>
                 <div className="container bg-white pb-80">
@@ -92,6 +92,8 @@ class Home extends Component {
                 </div>
             </div>
         );
+        }
+        else{return (<div></div>)}
     }
 }
 
