@@ -36,7 +36,7 @@ class OrderSearch extends Component {
           .post("https://node-app-o3vfgoc4iq-uc.a.run.app/postratings", {ratings:this.state.orderreview})
           .then((res) => {            
              axios
-                .get("http://127.0.0.1:5000/createReactWordCloud")
+                .get("https://python-o3vfgoc4iq-uc.a.run.app/createReactWordCloud")
                 .then((res) => {            
                     
                     alert("Review posted successfully.");

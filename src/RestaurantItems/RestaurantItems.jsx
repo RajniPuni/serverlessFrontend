@@ -34,7 +34,7 @@ class RestaurantItems extends Component {
         await axios
           .post("https://node-app-o3vfgoc4iq-uc.a.run.app/postorder", {orderitems:this.state.orderitems, id: id})
           .then((res) => {            
-            axios.get("http://127.0.0.1:5000/createVisualization")
+            axios.get("https://python-o3vfgoc4iq-uc.a.run.app/createVisualization")
                 .then((res) => {            
                     alert("Order placed successfully. Order id: " + id);
                 })

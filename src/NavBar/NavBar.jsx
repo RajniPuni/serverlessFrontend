@@ -12,10 +12,16 @@ class NavBar extends Component {
     }
 
     this.handlechatclick = this.handlechatclick.bind(this);  
+    this.handleonlinesuppclick = this.handleonlinesuppclick.bind(this);  
   }
   handlechatclick(event) { 
       
       window.location.href = "https://front-ion5wdstsq-uc.a.run.app/user";
+      
+  }
+  handleonlinesuppclick(event) { 
+      
+    window.location.href = "https://chatbot-o3vfgoc4iq-uc.a.run.app";
   }
   componentDidMount = () =>{
     console.log("logged in user" + localStorage.getItem('loggedInuser'));
@@ -38,7 +44,7 @@ class NavBar extends Component {
           <NavLink className="nav-link active" onClick={()=>this.handlechatclick()} to={"/Chat"}>Chat</NavLink>
           </li>
           <li className="nav-item">
-          <NavLink className="nav-link active" to={"/onlinesupport"}>Online Support</NavLink>
+          <NavLink className="nav-link active" onClick={()=>this.handleonlinesuppclick()} to={"/onlinesupport"}>Online Support</NavLink>
           </li>
           <li className="nav-item">
           <NavLink className="nav-link active" to={"/DataProcessing"}>Data Processing</NavLink>
