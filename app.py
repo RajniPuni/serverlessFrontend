@@ -1,10 +1,10 @@
 import boto3
 from flask import Flask
 from flask_cors import CORS
-# from googleapiclient.discovery import build
-# from google.oauth2 import service_account
-# import json
-# import os
+from googleapiclient.discovery import build
+from google.oauth2 import service_account
+import json
+import os
 # from dotenv import load_dotenv
 
 # load_dotenv()
@@ -15,31 +15,24 @@ app = Flask(__name__)
 # app.config['CORS_HEADERS'] = 'Content-Type'
 
 region_name = "us-east-1"
-# aws_access_key_id=os.environ['aws_access_key_id']
-# aws_secret_access_key=os.environ['aws_secret_access_key']
-# aws_session_token=os.environ['aws_session_token']
-
-aws_access_key_id='ASIAYYPQYHOVNAWIVONF'
-aws_secret_access_key='NsR5YsoFbONUl95Qb7GTvgZ0BN20Nf53aXHHVIMV'
-aws_session_token='FwoGZXIvYXdzEHUaDLVbGVJNRj3vfiSwASK/ARJvMfiChRVwWdh3rgqKmTFFh1EkDvta8aEocjH85OUVKsyZsMkceoGUCOddMFfWThBi3KDcJFUBJ7COcPzqiPlOL2lgVqmkUL7KIuwWiJNDYQOZRs/5fA76SM/fh2ETPYyBCNCEZ4Y3Gh3XavErBztURGUlWKrvbqs8IDz3jfyY2hNkHODA9dL4LmBLcB6n9CJyqEnX7NWs9UQfYocfEV/uiD6lkpeASsabP7ETQSIjsLn/TzOsrG4/jOsl1pAaKPGgg4gGMi3rsYoJrkoTaQZJleZEgpCjHP7C9gFZ06ueaim+FmR/M+mAeV4aw+qNNuTD/90='
+aws_access_key_id='ASIAYYPQYHOVPPOBDUOW'
+aws_secret_access_key='wvDWYZ8GwOq3cLaNRhN20cla35SwtCZKVx/zcHPr'
+aws_session_token='FwoGZXIvYXdzEJj//////////wEaDJyOSw2P7vUwNib2sSK/AW38SHYK1e/3buAm/w8Ybua5++xv95zYuDaW3sruilrXeK0y6oGI9EuWDlytcbEeWhoY7axA6DfFQ05jPHVks1s1O7TvZUNGCYlJ4PAxKcKd2QFXIM/DhVfe1u0w4I9ADWDhb3WI0YwqI1LulRiSaWdW2vAD/85pTrMRfAR+CPBXXoEATavFaUsPJE/2EaXe/LKoVrY0OifDfS925cz+T1JrtpNGJd4Cp3mzIY1ghY9v7dF9lUR9G+yeXHZYwHkXKI30iogGMi1hWPVKXmtgcq5bT2d/eie0A8H6+NH5fGkFIwkVoPp23LC1z78vZvMwXXlBruU='
 
 
 #GCP SPREADSHEET API
-# SERVICE_ACCOUNT_FILE = 'credentials.json'
-# SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-# creds = None
-# creds = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-# SAMPLE_SPREADSHEET_ID = '1si8OAmEZG4HBJHiTGMtZ4eYBC3akOzuU6PlaK4Zqjm0'
-# service = build('sheets', 'v4', credentials=creds)
-# sheet = service.spreadsheets()
+SERVICE_ACCOUNT_FILE = 'credentials.json'
+SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+creds = None
+creds = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+SAMPLE_SPREADSHEET_ID = '1si8OAmEZG4HBJHiTGMtZ4eYBC3akOzuU6PlaK4Zqjm0'
+service = build('sheets', 'v4', credentials=creds)
+sheet = service.spreadsheets()
 
 
 @app.route('/test')
 def testping():
     return "Hello world"
-
-comprehend = boto3.client('comprehend', region_name=region_name, aws_access_key_id=aws_access_key_id,
-    aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
 
 stopwords = ["able", "about", "above", "abroad", "according", "accordingly", "across", "actually", "adj", "after", "afterwards", "again", "against", "ago", "ahead", "ain't", "all", "allow", "allows", "almost", "alone", "along", "alongside", "already", "also", "although", "always", "am", "amid", "amidst", "among", "amongst", "an", "and", "another", "any", "good", "real", "anybody", "anyhow", "anyone", "anything", "anyway", "anyways", "anywhere", "apart", "appear", "appreciate", "appropriate", "are", "aren't", "around", "as", "a's", "aside", "ask", "asking", "associated", "at", "available", "away", "awfully", "back", "backward", "backwards", "be", "became", "because", "become", "becomes", "becoming", "been", "before", "beforehand", "begin", "behind", "being", "believe", "below", "beside", "besides", "best", "better", "between", "beyond", "both", "brief", "but", "by", "came", "can", "cannot", "cant", "can't", "caption", "cause", "causes", "certain", "certainly", "changes", "clearly", "c'mon", "co", "co.", "com", "come", "comes", "concerning", "consequently", "consider", "considering", "contain", "containing", "contains", "corresponding", "could", "couldn't", "course", "c's", "currently", "dare", "daren't", "definitely", "described", "despite", "did", "didn't", "different", "directly", "do", "does", "doesn't", "doing", "done", "don't", "down", "downwards", "during", "each", "edu", "eg", "eight", "eighty", "either", "else", "elsewhere", "end", "ending", "enough", "entirely", "especially", "et", "etc", "even", "ever", "evermore", "every", "everybody", "everyone",
                    "everything", "everywhere", "ex", "exactly", "example", "except", "fairly", "far", "farther", "few", "fewer", "fifth", "first", "five", "followed", "following", "follows", "for", "forever", "former","formerly", "forth", "forward", "found", "four", "from", "further", "furthermore", "get", "gets","getting", "given", "gives", "go", "goes", "going", "gone", "got", "gotten", "greetings", "had","hadn't", "half", "happens", "hardly", "has", "hasn't", "have", "haven't", "having", "he", "he'd","he'll", "hello", "help", "hence", "her", "here", "hereafter", "hereby", "herein", "here's","hereupon", "hers", "herself", "he's", "hi", "him", "himself", "his", "hither", "hopefully", "how","howbeit", "however", "hundred", "i'd", "ie", "if", "ignored", "i'll", "i'm", "immediate", "in","inasmuch", "inc", "inc.", "indeed", "indicate", "indicated", "indicates", "inner", "inside","insofar", "instead", "into", "inward", "is", "isn't", "it", "it'd", "it'll", "its", "it's","itself", "i've", "just", "k", "keep", "keeps", "kept", "know", "known", "knows", "last", "lately","later", "latter", "latterly", "least", "less", "lest", "let", "let's", "like", "liked", "likely","likewise", "little", "look", "looking", "looks", "low", "lower", "ltd", "made", "mainly", "make","makes", "many", "may", "maybe", "mayn't", "me", "mean", "meantime", "meanwhile", "merely", "might","mightn't", "mine", "minus", "miss", "more", "moreover", "most", "mostly", "mr", "mrs", "much",
@@ -110,105 +103,105 @@ def returningJson(data):
 
 @app.route('/createReactWordCloud')
 def createWordCloud():
-    # importData()
-    # json_object = returningJson(selectedentities)
+    importData()
+    json_object = returningJson(selectedentities)
     
-    # test = json.dumps(selectedentities)
+    test = json.dumps(selectedentities)
     
-    # jsonObject = json.loads(test)
+    jsonObject = json.loads(test)
     
-    # # print the keys and values
-    # for key in jsonObject:
-    #     value = jsonObject[key]
-    #     arr = []
-    #     arr.append(key)
-    #     arr.append(value)
-    #     data.append(arr)
-    #     print(arr)
+    # print the keys and values
+    for key in jsonObject:
+        value = jsonObject[key]
+        arr = []
+        arr.append(key)
+        arr.append(value)
+        data.append(arr)
+        print(arr)
 
-    # response = sheet.values().clear(spreadsheetId=SAMPLE_SPREADSHEET_ID,
-    #                         range="Sheet1!A2:C").execute()
+    response = sheet.values().clear(spreadsheetId=SAMPLE_SPREADSHEET_ID,
+                            range="Sheet1!A2:C").execute()
 
-    # response1 = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID,
-    #                             range="Sheet1!A2:C", valueInputOption="USER_ENTERED", 
-    #                             insertDataOption="INSERT_ROWS", body={"values":data}).execute()
-    # print(data)
+    response1 = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID,
+                                range="Sheet1!A2:C", valueInputOption="USER_ENTERED", 
+                                insertDataOption="INSERT_ROWS", body={"values":data}).execute()
+    print(data)
     return "data"
 
 @app.route('/createVisualization')
 def createVisualization():
-    # importVisualizationData()
-    # test = json.dumps(selectedVisentities)    
-    # jsonObject = json.loads(test)
+    importVisualizationData()
+    test = json.dumps(selectedVisentities)    
+    jsonObject = json.loads(test)
     
-    # # print the keys and values
-    # for key in jsonObject:
-    #     value = jsonObject[key]
-    #     arr = []
-    #     arr.append(key)
-    #     arr.append(value)
-    #     visData.append(arr)
-    # # print(visData)
-    # SPREADSHEET_ID = '14hrBMEE-sIOPDqzebWnFunG_jqVftVzgLZwx2fV7hsQ'
-    # service = build('sheets', 'v4', credentials=creds)
-    # sheet = service.spreadsheets()
-
-    # response = sheet.values().clear(spreadsheetId=SPREADSHEET_ID,
-    #                         range="Sheet1!A2:C").execute()
-
-    # response1 = sheet.values().append(spreadsheetId=SPREADSHEET_ID,
-    #                             range="Sheet1!A2:C", valueInputOption="USER_ENTERED", 
-    #                             insertDataOption="INSERT_ROWS", body={"values":visData}).execute()
+    # print the keys and values
+    for key in jsonObject:
+        value = jsonObject[key]
+        arr = []
+        arr.append(key)
+        arr.append(value)
+        visData.append(arr)
     # print(visData)
+    SPREADSHEET_ID = '14hrBMEE-sIOPDqzebWnFunG_jqVftVzgLZwx2fV7hsQ'
+    service = build('sheets', 'v4', credentials=creds)
+    sheet = service.spreadsheets()
+
+    response = sheet.values().clear(spreadsheetId=SPREADSHEET_ID,
+                            range="Sheet1!A2:C").execute()
+
+    response1 = sheet.values().append(spreadsheetId=SPREADSHEET_ID,
+                                range="Sheet1!A2:C", valueInputOption="USER_ENTERED", 
+                                insertDataOption="INSERT_ROWS", body={"values":visData}).execute()
+    print(visData)
     return "data"
     
-# def importData():    
-#     dynamo = boto3.resource('dynamodb', region_name=region_name, aws_access_key_id=aws_access_key_id,
-#             aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
+def importData():    
+    dynamo = boto3.resource('dynamodb', region_name=region_name, aws_access_key_id=aws_access_key_id,
+            aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
 
-#     tableRatingData = dynamo.Table('ratingsData')
-#     ratingData = tableRatingData.scan() 
-#     print(ratingData)
-#     for i in range(0,len(ratingData['Items'])-1):
-#         rating = ratingData['Items'][i]["ratings"]
-#         processRatings(rating)
+    tableRatingData = dynamo.Table('ratingsData')
+    ratingData = tableRatingData.scan() 
+    print(ratingData)
+    for i in range(0,len(ratingData['Items'])-1):
+        rating = ratingData['Items'][i]["ratings"]
+        processRatings(rating)
 
-# def importVisualizationData():    
-#     dynamo = boto3.resource('dynamodb', region_name=region_name, aws_access_key_id=aws_access_key_id,
-#             aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
+def importVisualizationData():    
+    dynamo = boto3.resource('dynamodb', region_name=region_name, aws_access_key_id=aws_access_key_id,
+            aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
 
-#     tableData = dynamo.Table('orders')
-#     orders = tableData.scan() 
+    tableData = dynamo.Table('orders')
+    orders = tableData.scan() 
 
-#     for i in range(0,len(orders['Items'])-1):
-#         order = orders['Items'][i]["items"]
-#         for currentword in order.split(','):
-#             if currentword != "":
-#                 currentword = currentword.replace(" ", "").replace("-", "")
-#                 if currentword in selectedVisentities:
-#                     count = selectedVisentities[currentword]
-#                     selectedVisentities[currentword] = count + 1
-#                 else:
-#                     selectedVisentities[currentword] = 1
+    for i in range(0,len(orders['Items'])-1):
+        order = orders['Items'][i]["items"]
+        for currentword in order.split(','):
+            if currentword != "":
+                currentword = currentword.replace(" ", "").replace("-", "")
+                if currentword in selectedVisentities:
+                    count = selectedVisentities[currentword]
+                    selectedVisentities[currentword] = count + 1
+                else:
+                    selectedVisentities[currentword] = 1
 
 
-# def processRatings(rating):
-#     # print(rating)
-#     # processRatingJson = json.loads(json.dumps(comprehend.detect_key_phrases(Text=rating, LanguageCode='en')))
-#     # print(processRatingJson['KeyPhrases'])
-#     # return processRatingJson['KeyPhrases'][0]['Text']
-#     # rating = "Preheat a Waffle Pizza Burger iron according to Donut manufacturer's instructions. Whisk flour, cornmeal, sugar, baking powder, baking soda, and salt together in a large mixing bowl. Whisk half-and-half, ricotta cheese, eggs, melted butter, and lemon extract together in a separate bowl until smooth. Pour into the flour mixture and mix until thoroughly combined."
+def processRatings(rating):
+    # print(rating)
+    # processRatingJson = json.loads(json.dumps(comprehend.detect_key_phrases(Text=rating, LanguageCode='en')))
+    # print(processRatingJson['KeyPhrases'])
+    # return processRatingJson['KeyPhrases'][0]['Text']
+    # rating = "Preheat a Waffle Pizza Burger iron according to Donut manufacturer's instructions. Whisk flour, cornmeal, sugar, baking powder, baking soda, and salt together in a large mixing bowl. Whisk half-and-half, ricotta cheese, eggs, melted butter, and lemon extract together in a separate bowl until smooth. Pour into the flour mixture and mix until thoroughly combined."
     
-#     for currentword in rating.split():
-#         currentword = currentword.strip(',').strip('.').replace("-","")
+    for currentword in rating.split():
+        currentword = currentword.strip(',').strip('.').replace("-","")
         
-#         if len(currentword) != 0 and currentword[0].isupper() and not stopwords.__contains__(currentword.lower()) and not currentword.__contains__('''"'''):
-#             if currentword in selectedentities:
-#                 count = selectedentities[currentword]
-#                 selectedentities[currentword] = count + 1
-#             else:
-#                 selectedentities[currentword] = 1
+        if len(currentword) != 0 and currentword[0].isupper() and not stopwords.__contains__(currentword.lower()) and not currentword.__contains__('''"'''):
+            if currentword in selectedentities:
+                count = selectedentities[currentword]
+                selectedentities[currentword] = count + 1
+            else:
+                selectedentities[currentword] = 1
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0',port=8080)
