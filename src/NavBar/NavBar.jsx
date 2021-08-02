@@ -61,6 +61,7 @@ class NavBar extends Component {
     localStorage.clear();
     this.setState({currentUser:""});
     localStorage.setItem('loggedInuser', "");
+    localStorage.setItem('isRestOwner', "false");
     window.location.href = "https://node-app-o3vfgoc4iq-uc.a.run.app/Home";
   }
 

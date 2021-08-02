@@ -38,7 +38,7 @@ class UpdateOrder extends Component {
     };
 
     render() {     
-        if(localStorage.getItem('isRestOwner')){
+        if(localStorage.getItem('isRestOwner')=="true"){
         return (
         <div className="container bg-white pb-80">
             <h2 className="display-5 text-center mb-2 mt-5"><span className="text-pink">Orders</span></h2>
@@ -63,7 +63,7 @@ class UpdateOrder extends Component {
         );
         }
         else{
-            return(<div></div>)
+            return(<div><span>This feature is only accessible to the restaurant owner</span></div>)
         }
     }
 }

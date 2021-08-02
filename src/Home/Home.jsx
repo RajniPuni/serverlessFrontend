@@ -32,6 +32,22 @@ class Home extends Component {
         console.log("helloooo")
         this.displayItems();
     }
+
+    showVisualization = () => {
+        if (localStorage.getItem('isRestOwner') == "true") {
+            return (
+                <div>
+                    <h2 className="display-4 text-center mb-2">Most ordered <span className="text-pink">items</span></h2>
+                    <div className="row">
+                        <div className="pl-80">
+                        <iframe width="600" height="450" src="https://datastudio.google.com/embed/reporting/c7c10cb2-29bf-41f2-90b7-931240727e02/page/FgcWC" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        
+                    </div>
+                </div>
+            );
+        }
+    }
     render() {
         console.log(this.props.currentUser);
         console.log(localStorage.getItem('firstName'));
@@ -80,14 +96,9 @@ class Home extends Component {
                             </div>
                         </div>
                     </div>
-                    <h2 className="display-4 text-center mb-2">Most ordered <span className="text-pink">items</span></h2>
-                    <div className="row">
-                        <div className="pl-80">
-                        <iframe width="600" height="450" src="https://datastudio.google.com/embed/reporting/c7c10cb2-29bf-41f2-90b7-931240727e02/page/FgcWC" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                        
-                    </div>
-
+                    {
+                        this.showVisualization()
+                    }
                     
                 </div>
             </div>

@@ -21,6 +21,7 @@ class DataProcessing extends Component {
     // }
 
     render() {
+      if(localStorage.getItem('isRestOwner')=="true"){
       return (
         <div className="container">                
           <div className="form-group col-12">
@@ -32,6 +33,10 @@ class DataProcessing extends Component {
           </div>
         </div>
       );
+      }
+      else{
+        return(<div><span><span >This feature is only accessible to the restaurant owner</span></span></div>)
+    }
     }
 }
 

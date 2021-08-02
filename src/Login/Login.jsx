@@ -23,69 +23,75 @@ class Login extends Component {
         this.setState({
             errorMessage: ""                    
         });        
-        console.log(this.userLoginInfo);        
+        console.log("email" + this.userLoginInfo.email);        
+        localStorage.setItem('loggedInuser', this.userLoginInfo.email);
         
-        axios.get('https://us-central1-sapp3-b1ed6.cloudfunctions.net/app/findUser/' + this.userLoginInfo.email)
-            .then(res => {
-                console.log("finduser " + res.data.uid)
-                this.userLoginInfo.uid = res.data.uid;
-                axios.get('https://us-central1-sapp3-b1ed6.cloudfunctions.net/app/getUserDetails/'+this.userLoginInfo.uid + '/' + this.userLoginInfo.password).then(
-                    res => {
-                        console.log("getUserDetails " + res.data)
-                        const userData = res.data.split(",")
-                        console.log(userData[0])
-                        if (userData[0]){
-                            axios.post('https://node-app-o3vfgoc4iq-uc.a.run.app/postSecurityQues', {
-                                userId: this.userLoginInfo.uid, 
-                                questionId: "1",
-                                question: this.userLoginInfo.secquestion, 
-                                answer: this.userLoginInfo.secAnswer,isRegister: false}).then(
-                                res => {
-                                    console.log("postSecurityQues " + res.data[0].answer)
-                                    if (res.data[0].answer == this.userLoginInfo.secAnswer){
+        console.log(localStorage.getItem('loggedInuser'))
+        this.setState({
+            errorMessage: "Login Successful"                    
+        });
+        // axios.get('https://us-central1-sapp3-b1ed6.cloudfunctions.net/app/findUser/' + this.userLoginInfo.email)
+        //     .then(res => {
+        //         console.log("finduser " + res.data.uid)
+        //         this.userLoginInfo.uid = res.data.uid;
+        //         axios.get('https://us-central1-sapp3-b1ed6.cloudfunctions.net/app/getUserDetails/'+this.userLoginInfo.uid + '/' + this.userLoginInfo.password).then(
+        //             res => {
+        //                 console.log("getUserDetails " + res.data)
+        //                 const userData = res.data.split(",")
+        //                 console.log(userData[0])
+        //                 if (userData[0]=="true"){
+        //                     alert("hi")
+        //                     axios.post('https://node-app-o3vfgoc4iq-uc.a.run.app/postSecurityQues', {
+        //                         userId: this.userLoginInfo.uid, 
+        //                         questionId: "1",
+        //                         question: this.userLoginInfo.secquestion, 
+        //                         answer: this.userLoginInfo.secAnswer,isRegister: false}).then(
+        //                         res => {
+        //                             console.log("postSecurityQues " + res.data[0].answer)
+        //                             if (res.data[0].answer == this.userLoginInfo.secAnswer){
                                     
-                                    localStorage.setItem('loggedInuser', this.userLoginInfo.email);
-                                    localStorage.setItem('isRestOwner', userData[1]);
-                                    console.log(localStorage.getItem('loggedInuser'))
-                                    this.setState({
-                                        errorMessage: "Login Successful"                    
-                                    });
-                                }
-                                else{
-                                    this.setState({
-                                        errorMessage: "Incorrect security answer"                    
-                                    });
-                                }
-                                },
-                                error => {                        
-                                    console.log(error);
-                                    this.setState({
-                                        errorMessage: "Sorry, something went wrong on our side. Please try again later."                    
-                                    });
-                                }
-                            );
-                        }
-                        else{
-                            this.setState({
-                                errorMessage: "Invalid Credentials!"                    
-                            });
-                        }
-                    },
-                    error => {                        
-                        console.log(error);
-                        this.setState({
-                            errorMessage: "Sorry, something went wrong on our side. Please try again later."                    
-                        });
-                    }
-                );
+        //                             localStorage.setItem('loggedInuser', this.userLoginInfo.email);
+        //                             localStorage.setItem('isRestOwner', userData[1]);
+        //                             console.log(localStorage.getItem('loggedInuser'))
+        //                             this.setState({
+        //                                 errorMessage: "Login Successful"                    
+        //                             });
+        //                         }
+        //                         else{
+        //                             this.setState({
+        //                                 errorMessage: "Incorrect security answer"                    
+        //                             });
+        //                         }
+        //                         },
+        //                         error => {                        
+        //                             console.log(error);
+        //                             this.setState({
+        //                                 errorMessage: "Sorry, something went wrong on our side. Please try again later."                    
+        //                             });
+        //                         }
+        //                     );
+        //                 }
+        //                 else{
+        //                     this.setState({
+        //                         errorMessage: "Invalid Credentials!"                    
+        //                     });
+        //                 }
+        //             },
+        //             error => {                        
+        //                 console.log(error);
+        //                 this.setState({
+        //                     errorMessage: "Sorry, something went wrong on our side. Please try again later."                    
+        //                 });
+        //             }
+        //         );
 
-            })
-            .catch(error => {
-                console.log(error);
-                this.setState({
-                    errorMessage: "Invalid Credentials!"                    
-                });
-            })           
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //         this.setState({
+        //             errorMessage: "Invalid Credentials!"                    
+        //         });
+        //     })           
     }
 
     showMessage = () => {

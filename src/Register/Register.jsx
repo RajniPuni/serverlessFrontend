@@ -26,57 +26,64 @@ class Register extends Component {
         });
         if (this.userRegistrationInfo.isRestOwner == "on"){
             this.userRegistrationInfo.owner = true;
+            localStorage.setItem('isRestOwner', "true");
+        }
+        else{
+            localStorage.setItem('isRestOwner', "false");
         }
 
         console.log(this.userRegistrationInfo);
-        axios.post('https://node-app-o3vfgoc4iq-uc.a.run.app/createUser', {email: this.userRegistrationInfo.email, 
-                password: this.userRegistrationInfo.password})
-            .then(res => {
-                console.log("createuser " + res.data.uid)
-                this.userRegistrationInfo.uid = res.data.uid;
-                if(this.userRegistrationInfo.uid != ""){
-                    axios.post('https://node-app-o3vfgoc4iq-uc.a.run.app/postUserDetails', {id: this.userRegistrationInfo.uid, 
-                            email: this.userRegistrationInfo.email, password: this.userRegistrationInfo.password, 
-                            name: this.userRegistrationInfo.userName, isRestaurantOwner: this.userRegistrationInfo.owner})
-                            .then(res => {
-                                console.log("postuserdetails  " + res)
+        this.setState({
+            successMessage: "Registration successful"                    
+        });
+        // axios.post('https://node-app-o3vfgoc4iq-uc.a.run.app/createUser', {email: this.userRegistrationInfo.email, 
+        //         password: this.userRegistrationInfo.password})
+        //     .then(res => {
+        //         console.log("createuser " + res.data.uid)
+        //         this.userRegistrationInfo.uid = res.data.uid;
+        //         if(this.userRegistrationInfo.uid != ""){
+        //             axios.post('https://node-app-o3vfgoc4iq-uc.a.run.app/postUserDetails', {id: this.userRegistrationInfo.uid, 
+        //                     email: this.userRegistrationInfo.email, password: this.userRegistrationInfo.password, 
+        //                     name: this.userRegistrationInfo.userName, isRestaurantOwner: this.userRegistrationInfo.owner})
+        //                     .then(res => {
+        //                         console.log("postuserdetails  " + res)
 
-                                axios.post('https://node-app-o3vfgoc4iq-uc.a.run.app/postSecurityQues', {
-                                    userId: this.userRegistrationInfo.uid, 
-                                    questionId: "1",
-                                    question: this.userRegistrationInfo.secquestion, 
-                                    answer: this.userRegistrationInfo.secAnswer,isRegister: true})
-                                    .then(res => {
-                                        console.log("postsecurityques " + res.data);
-                                        this.setState({
-                                            successMessage: "Registration successful"                    
-                                        });
-                                        // window.location.href = "http://localhost:3001/login";
-                                    },
-                                    error => {                        
-                                        console.log(error);
-                                        this.setState({
-                                            errorMessage: "Sorry, something went wrong on our side. Please try again later."                    
-                                        });
-                                    }
-                                );
-                        },
-                        error => {                        
-                            console.log(error);
-                            this.setState({
-                                errorMessage: "Sorry, something went wrong on our side. Please try again later."                    
-                            });
-                        }
-                    );
-                }
-                this.setState({ successMessage: "Account Created Successfully." });
+        //                         axios.post('https://node-app-o3vfgoc4iq-uc.a.run.app/postSecurityQues', {
+        //                             userId: this.userRegistrationInfo.uid, 
+        //                             questionId: "1",
+        //                             question: this.userRegistrationInfo.secquestion, 
+        //                             answer: this.userRegistrationInfo.secAnswer,isRegister: true})
+        //                             .then(res => {
+        //                                 console.log("postsecurityques " + res.data);
+        //                                 this.setState({
+        //                                     successMessage: "Registration successful"                    
+        //                                 });
+        //                                 // window.location.href = "http://localhost:3001/login";
+        //                             },
+        //                             error => {                        
+        //                                 console.log(error);
+        //                                 this.setState({
+        //                                     errorMessage: "Sorry, something went wrong on our side. Please try again later."                    
+        //                                 });
+        //                             }
+        //                         );
+        //                 },
+        //                 error => {                        
+        //                     console.log(error);
+        //                     this.setState({
+        //                         errorMessage: "Sorry, something went wrong on our side. Please try again later."                    
+        //                     });
+        //                 }
+        //             );
+        //         }
+        //         this.setState({ successMessage: "Account Created Successfully." });
 
-            }).catch(error => {
-                console.log(JSON.stringify(error.response));
-                this.setState({ errorMessage: "Sorry. There was some error,"+
-                " could not register your account. Please try again later.",
-                successMessage:""});
-            })
+        //     }).catch(error => {
+        //         console.log(JSON.stringify(error.response));
+        //         this.setState({ errorMessage: "Sorry. There was some error,"+
+        //         " could not register your account. Please try again later.",
+        //         successMessage:""});
+        //     })
 
     }
     showMessage = () => {
@@ -146,7 +153,16 @@ class Register extends Component {
                             onChange={event => this.userRegistrationInfo.secAnswer = event.target.value} />
                             
                     </div>
-
+                    <div className="form-group col-12">                        
+                            <span><b>Select a restaurant</b></span>
+                            <select name="secques" id="secques" className="form-control" 
+                            onChange={event => this.userRegistrationInfo.secquestion = event.target.value}>
+                                <option value="0">--Select--</option>
+                                <option value="Mexican cuisine">Mexican cuisine</option>
+                                <option value="Thai cuisine">Thai cuisine</option>
+                                <option value="Indian cuisine">Indian cuisine</option>
+                            </select>
+                    </div>
                     <div className="form-group col-12">
                         <input type="checkbox" className="form-control"
                             id="loginInputrestOwner"  style={{width:"fit-content"}}
