@@ -15,9 +15,9 @@ app = Flask(__name__)
 # app.config['CORS_HEADERS'] = 'Content-Type'
 
 region_name = "us-east-1"
-aws_access_key_id='ASIAYYPQYHOVPPOBDUOW'
-aws_secret_access_key='wvDWYZ8GwOq3cLaNRhN20cla35SwtCZKVx/zcHPr'
-aws_session_token='FwoGZXIvYXdzEJj//////////wEaDJyOSw2P7vUwNib2sSK/AW38SHYK1e/3buAm/w8Ybua5++xv95zYuDaW3sruilrXeK0y6oGI9EuWDlytcbEeWhoY7axA6DfFQ05jPHVks1s1O7TvZUNGCYlJ4PAxKcKd2QFXIM/DhVfe1u0w4I9ADWDhb3WI0YwqI1LulRiSaWdW2vAD/85pTrMRfAR+CPBXXoEATavFaUsPJE/2EaXe/LKoVrY0OifDfS925cz+T1JrtpNGJd4Cp3mzIY1ghY9v7dF9lUR9G+yeXHZYwHkXKI30iogGMi1hWPVKXmtgcq5bT2d/eie0A8H6+NH5fGkFIwkVoPp23LC1z78vZvMwXXlBruU='
+aws_access_key_id='ASIAYYPQYHOVBPCQMDOS'
+aws_secret_access_key='Wxy6ysKym7BHZvqpfZ3YlJEbc1AJCnSLfGnlblzA'
+aws_session_token='FwoGZXIvYXdzELH//////////wEaDJ/CymCQGJbLHgrDKyK/AXr3QlQztxjz3YFv0BqW1xB4eOjQuYXTnSLGYlgWfrtEZ89EvIvqPsWpwO0rBvqO7AfSYsbdkVrHcbfSTjMIea+ryNxDDzgBIs6qpP5lCWZ8pZXe0g6A/3KnzCWecwDt0crTwMofaYI+oegijFb6uWAFhncObyQUFsoUmm3/wVHHFa5uA6/YkThCRY7aWOvWEqSRc4bZKGANfhkZRcinIoNp/NOP9a1wm0jBFgdqep/h1zVwUY7/o4Yb3+lP3F25KOy4kIgGMi1tldSpXZxOPgjVIFUG/VRnQ6diq6m/je3R4VHM8ypuIB941xnyWWw6lnvNLIw='
 
 
 #GCP SPREADSHEET API
@@ -204,4 +204,4 @@ def processRatings(rating):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',port=8080)
+    app.run()
